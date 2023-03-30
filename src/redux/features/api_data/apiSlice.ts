@@ -12,7 +12,7 @@ export const fetchCustomers = createAsyncThunk<IApiResponse>(
             return JSON.parse(cachedResponse) as IApiResponse;
         }
 
-        const response = await fetch(`${API_URL}/api/Customers`, {
+        const response = await fetch(`${API_URL}/api/customers`, {
             headers: {
                 Authorization: `Bearer ${TOKEN}`,
             },
@@ -25,7 +25,7 @@ export const fetchCustomers = createAsyncThunk<IApiResponse>(
         sessionStorage.setItem('customers', JSON.stringify(data));
         return data;
     }
-);
+) as any;
 
 export const apiSlice = createSlice({
     name: 'api',

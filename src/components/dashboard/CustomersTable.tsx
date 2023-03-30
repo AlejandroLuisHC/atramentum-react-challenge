@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { ICustomersTableProp } from '../../helper/interfaces/dashboard';
 import { StyledTable, StyledTd, StyledTh } from '../../style/components/dashboard';
+import { Link } from 'react-router-dom';
 
 const CustomersTable: FC<ICustomersTableProp> = ({ customers }) => {
     return (
@@ -12,6 +13,7 @@ const CustomersTable: FC<ICustomersTableProp> = ({ customers }) => {
                     <StyledTh>Phone 1</StyledTh>
                     <StyledTh>Phone 2</StyledTh>
                     <StyledTh>Email</StyledTh>
+                    <StyledTh>Actions</StyledTh>
                 </tr>
                 {customers.map(customer => (
                     <tr key={customer.id}>
@@ -20,6 +22,11 @@ const CustomersTable: FC<ICustomersTableProp> = ({ customers }) => {
                         <StyledTd>{customer.phone1}</StyledTd>
                         <StyledTd>{customer.phone2}</StyledTd>
                         <StyledTd>{customer.email}</StyledTd>
+                        <StyledTd> 
+                            <Link to={`/customer/${customer.id}`}>
+                                View
+                            </Link>
+                        </StyledTd>
                     </tr>
                 ))}
             </tbody>

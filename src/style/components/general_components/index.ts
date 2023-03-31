@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { color } from '../../style_constants';
 
+// Spinner
 export const DivSpinner = styled.div`
     display: flex;
     justify-content: center;

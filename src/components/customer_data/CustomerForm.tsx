@@ -1,16 +1,16 @@
 import { FC } from "react";
 import { ICustomerFormProp } from "../../helper/interfaces/customer_data";
-import { 
-    CustomerDataWrapper, 
-    CustomerDetail, 
-    CustomerInfo, 
-    CustomerName, 
-    DetailTitle, 
-    DetailValue 
+import {
+    CustomerDataWrapper,
+    CustomerDetail,
+    CustomerInfo,
+    CustomerName,
+    DetailTitle,
+    DetailValue
 } from "../../style/components/customer_data";
 import { formatDate } from "../../helper/utils";
 
-const CustomerForm: FC<ICustomerFormProp>= ({ customer }) => {
+const CustomerForm: FC<ICustomerFormProp> = ({ customer }) => {
     const {
         contactName,
         phone1,

@@ -4,15 +4,19 @@ import { ICustomer, IApiResponse } from '../../../helper/interfaces/api';
 const API_URL = import.meta.env.VITE_URL_API;
 const TOKEN = import.meta.env.VITE_TOKEN;
 
-export const fetchCustomers = createAsyncThunk<IApiResponse>(
+interface IFetchCustomersArgs {
+    pageNumber?: number;
+}
+
+export const fetchCustomers = createAsyncThunk<IApiResponse, IFetchCustomersArgs>(
     'api/fetchCustomers',
-    async () => {
-        const cachedResponse = sessionStorage.getItem('customers');
+    async ({ pageNumber = 0 }) => {
+        const cachedResponse = sessionStorage.getItem(`customers_${pageNumber}`);
         if (cachedResponse) {
             return JSON.parse(cachedResponse) as IApiResponse;
         }
 
-        const response = await fetch(`${API_URL}/api/customers`, {
+        const response = await fetch(`${API_URL}/api/customers?pageNumber=${pageNumber}&pageSize=5`, {
             headers: {
                 Authorization: `Bearer ${TOKEN}`,
             },
@@ -22,7 +26,7 @@ export const fetchCustomers = createAsyncThunk<IApiResponse>(
         }
 
         const data = await response.json();
-        sessionStorage.setItem('customers', JSON.stringify(data));
+        sessionStorage.setItem(`customers_${pageNumber}`, JSON.stringify(data));
         return data;
     }
 ) as any;
@@ -31,6 +35,7 @@ export const apiSlice = createSlice({
     name: 'api',
     initialState: {
         Customers: [] as ICustomer[],
+        totalPages: 0,
         isLoading: false,
         error: null as string | null,
     },
@@ -44,6 +49,7 @@ export const apiSlice = createSlice({
             state.isLoading = false;
             state.error = null;
             state.Customers = action.payload.content;
+            state.totalPages = action.payload.totalPages;
         });
         builder.addCase(fetchCustomers.rejected, (state, action) => {
             state.isLoading = false;

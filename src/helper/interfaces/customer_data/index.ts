@@ -1,5 +1,9 @@
-import { ICustomer } from "../api";
+import { ICustomer, ICustomerWeb } from "../api";
 
-export interface ICustomerFormProp {
+export interface ICustomerInfoProp {
     customer: ICustomer;
+}
+
+export interface ICustomerWebsInfoProp {
+    id: number;
 }

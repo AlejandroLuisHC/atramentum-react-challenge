@@ -1,16 +1,16 @@
 import { FC } from "react";
-import { ICustomerFormProp } from "../../helper/interfaces/customer_data";
+import { ICustomerInfoProp } from "../../helper/interfaces/customer_data";
 import {
     CustomerDataWrapper,
     CustomerDetail,
-    CustomerInfo,
+    CustomerInfoDiv,
     CustomerName,
     DetailTitle,
     DetailValue
 } from "../../style/components/customer_data";
 import { formatDate } from "../../helper/utils";
 
-const CustomerForm: FC<ICustomerFormProp> = ({ customer }) => {
+const CustomerInfo: FC<ICustomerInfoProp> = ({ customer }) => {
     const {
         contactName,
         phone1,
@@ -21,12 +21,12 @@ const CustomerForm: FC<ICustomerFormProp> = ({ customer }) => {
         agreeTerms,
         agreeCommercials,
         lastModifiedDate,
-        observations,
+        observations
     } = customer;
 
     return (
         <CustomerDataWrapper>
-            <CustomerInfo>
+            <CustomerInfoDiv>
                 <CustomerName>{contactName}</CustomerName>
                 <CustomerDetail>
                     <DetailTitle>Observations:</DetailTitle>
@@ -66,9 +66,9 @@ const CustomerForm: FC<ICustomerFormProp> = ({ customer }) => {
                     <DetailTitle>Last modified date:</DetailTitle>
                     <DetailValue>{formatDate(lastModifiedDate)}</DetailValue>
                 </CustomerDetail>
-            </CustomerInfo>
+            </CustomerInfoDiv>
         </CustomerDataWrapper>
     )
 }
 
-export default CustomerForm
+export default CustomerInfo

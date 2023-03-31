@@ -8,7 +8,7 @@ export const CustomerDataWrapper = styled.div`
     padding: 20px;
 `
 
-export const CustomerInfo = styled.div`
+export const CustomerInfoDiv = styled.div`
     display: flex;
     flex-direction: column;
     background-color: ${color.secondary};

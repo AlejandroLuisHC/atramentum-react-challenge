@@ -3,6 +3,7 @@ import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import { Main, LayoutContainer } from '../style/components/layout/layoutStyle';
 import { memo } from 'react'
+import { Toaster } from 'react-hot-toast';
 
 const Layout = () => {
     return (
@@ -12,6 +13,10 @@ const Layout = () => {
                 <Outlet />
             </Main>
             <Footer />
+            <Toaster
+                position="bottom-right"
+                reverseOrder={false}
+            />
         </LayoutContainer>
     )
 }

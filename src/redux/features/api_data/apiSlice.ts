@@ -7,6 +7,7 @@ import {
     ICustomerWeb,
     IFetchCustomerWebssArgs
 } from '../../../helper/interfaces/api';
+import { toast } from "react-hot-toast";
 
 const API_URL = import.meta.env.VITE_URL_API;
 const TOKEN = import.meta.env.VITE_TOKEN;
@@ -57,9 +58,11 @@ export const fetchCustomerWebs = createAsyncThunk<IApiResponseWeb, IFetchCustome
     }
 ) as any;
 
-export const editCustomer = createAsyncThunk<ICustomer, { id: string, data: ICustomer }>(
+export const editCustomer = createAsyncThunk<ICustomer, { id: number, data: ICustomer }>(
     'api/editCustomer',
     async ({ id, data }) => {
+        console.log("DATA", data)
+        console.log("ID", id)
         const response = await fetch(`${API_URL}/api/customers/${id}`, {
             method: 'PUT',
             headers: {
@@ -69,11 +72,14 @@ export const editCustomer = createAsyncThunk<ICustomer, { id: string, data: ICus
             body: JSON.stringify(data),
         });
         if (!response.ok) {
-            throw new Error('Failed to edit Customer');
+            console.log(`Failed to edit Customer #${id}: ${response.body}`);
+            toast.error(`Failed to edit Customer #${id}`);
+            throw new Error(`Failed to edit Customer #${id}`); 
         }
-
+ 
         const editedCustomer = await response.json();
         sessionStorage.removeItem(`customers_${id}`);
+        toast.success(`Customer #${id} edited successfully`);
         return editedCustomer;
     }
 ) as any;

@@ -3,5 +3,7 @@ export const formatDate = (date: string) => {
     const day = newDate.getDate();
     const month = newDate.getMonth() + 1;
     const year = newDate.getFullYear();
-    return `${day}/${month}/${year}`;
+    const hours = newDate.getHours();
+    const minutes = newDate.getMinutes();
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
 }

@@ -1,4 +1,5 @@
 export interface ICustomer {
+    [key: string]: any;
     id: number;
     phone1: string;
     phone2: string;
@@ -37,6 +38,7 @@ export interface ICustomer {
 }
 
 export interface ICustomerEdit {
+    [key: string]: any;
     id?: number;
     phone1?: string;
     phone2?: string;
@@ -44,9 +46,9 @@ export interface ICustomerEdit {
     activated?: boolean;
     agreeCommercials?: boolean;
     agreeTerms?: boolean;
-    email?: string;
-    password?: string;
-    originPage?: number;
+    email: string;
+    password: string;
+    originPage: number;
     commercialAgentId?: number | null;
     customerCategoryId?: number;
     fareRateId?: number;

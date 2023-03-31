@@ -6,36 +6,50 @@ import {
     CustomerDetail,
     CustomerInfoDiv,
     CustomerName,
-    DetailTitle,
-    DetailValue
+    DetailInput,
+    DetailLabel,
+    DetailText,
+    DetailValueError
 } from "../../style/components/customer_data";
 import { formatDate } from "../../helper/utils";
 import { RootState } from "../../redux/store";
 import { fetchCustomerWebs } from "../../redux/features/api_data/apiSlice";
+import Spinner from "../general_components/Spinner";
 
 const CustomerWebsInfo: FC<ICustomerWebsInfoProp> = ({ id }) => {
     const dispatch = useDispatch();
-    const webs = useSelector((state: RootState) => state.api.CustomerWebs);
-    console.log(">>>>>", webs)
+    const { CustomerWebs: webs, isLoading } = useSelector((state: RootState) => state.api);
+
     useEffect(() => {
         dispatch(fetchCustomerWebs({ customerId: id }));
     }, [dispatch, id]);
 
+    if (isLoading) {
+        return (
+            <Spinner />
+        )
+    }
+
     return (
         <CustomerDataWrapper>
             <CustomerInfoDiv>
-                <CustomerName>Webs</CustomerName>
-                {
+                <CustomerName>Customer's webs</CustomerName>
+                {webs.length > 0 ?
                     webs.map((web, index) => {
                         return (
                             <CustomerDetail key={web.id}>
-                                <DetailTitle>Web {index + 1}</DetailTitle>
-                                <DetailValue>URL: <b>{web.url}</b></DetailValue>
-                                <DetailValue>Last update: <b>{formatDate(web.lastModifiedDate)}</b></DetailValue>
+                                <DetailLabel>Web #{index + 1}:</DetailLabel>
+                                <DetailInput 
+                                    type='text'
+                                    value={web.url}
+                                />                           
+                                <DetailText>
+                                    Last modified: {formatDate(web.lastModifiedDate)}
+                                </DetailText>
                             </CustomerDetail>
                         )
                     })
-                }
+                    : <DetailValueError>No webs found for this customer</DetailValueError>                }
             </CustomerInfoDiv>
         </CustomerDataWrapper>
     )

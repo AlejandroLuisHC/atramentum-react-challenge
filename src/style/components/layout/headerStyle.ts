@@ -21,7 +21,7 @@ export const Container = styled.header`
 `;
 
 export const Logo = styled(Link)`
-    width: 120px;
+    width: 140px;
     text-decoration: none;
     color: ${color.white};
 
@@ -46,6 +46,7 @@ export const Navigation = styled.nav`
 export const NavLink = styled(Link)`
     text-decoration: none;
     color: ${color.white};
+    font-size: 1.1rem;
 
     &:hover {
         color: ${color.blue};

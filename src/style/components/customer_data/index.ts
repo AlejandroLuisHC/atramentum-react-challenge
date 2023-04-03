@@ -3,14 +3,12 @@ import { color, device } from '../../style_constants';
 import { Link } from 'react-router-dom';
 
 export const CustomerId = styled.h1`
-    font-size: 36px;
-    margin-bottom: 20px;
+    font-size: 34px;
     color: ${color.text};
     text-align: center;
 
     @media ${device.mobile} {
-        font-size: 32px;
-        margin-bottom: 15px;
+        font-size: 28px;
     }
 `
 
@@ -50,12 +48,12 @@ export const CustomerInfoForm = styled.form`
 `
 
 export const CustomerName = styled.h1`
-    font-size: 32px;
+    font-size: 30px;
     margin-bottom: 20px;
     color: ${color.text};
 
     @media ${device.mobile} {
-        font-size: 28px;
+        font-size: 24px;
         margin-bottom: 15px;
     }
 `

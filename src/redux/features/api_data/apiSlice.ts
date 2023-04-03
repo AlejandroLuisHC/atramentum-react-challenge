@@ -8,9 +8,9 @@ import {
     IFetchCustomerWebssArgs
 } from '../../../helper/interfaces/api';
 import { toast } from "react-hot-toast";
+import { API_URL, getToken } from '../../../config/config'
 
-const API_URL = import.meta.env.VITE_URL_API;
-const TOKEN = import.meta.env.VITE_TOKEN;
+const TOKEN = getToken();
 
 export const fetchCustomers = createAsyncThunk<IApiResponse, IFetchCustomersArgs>(
     'api/fetchCustomers',

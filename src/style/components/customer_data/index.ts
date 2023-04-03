@@ -22,6 +22,7 @@ export const CustomerDataWrapper = styled.div`
 
 export const CustomerInfoDiv = styled.div`
     display: flex;
+    position: relative;
     flex-direction: column;
     background-color: ${color.secondary};
     border-radius: 8px;

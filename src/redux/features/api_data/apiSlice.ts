@@ -10,11 +10,11 @@ import {
 import { toast } from "react-hot-toast";
 import { API_URL, getToken } from '../../../config/config'
 
-const TOKEN = getToken();
-
 export const fetchCustomers = createAsyncThunk<IApiResponse, IFetchCustomersArgs>(
     'api/fetchCustomers',
     async ({ pageNumber = 0 }) => {
+        const TOKEN = await getToken();
+
         const cachedResponse = sessionStorage.getItem(`customers_${pageNumber}`);
         if (cachedResponse) {
             return JSON.parse(cachedResponse) as IApiResponse;
@@ -38,6 +38,8 @@ export const fetchCustomers = createAsyncThunk<IApiResponse, IFetchCustomersArgs
 export const fetchCustomerWebs = createAsyncThunk<IApiResponseWeb, IFetchCustomerWebssArgs>(
     'api/fetchCustomerWebs',
     async ({ customerId }) => {
+        const TOKEN = await getToken();
+
         const cachedResponse = sessionStorage.getItem(`customer_webs_${customerId}`);
         if (cachedResponse) {
             return JSON.parse(cachedResponse) as IApiResponseWeb;
@@ -58,11 +60,13 @@ export const fetchCustomerWebs = createAsyncThunk<IApiResponseWeb, IFetchCustome
     }
 ) as any;
 
-export const editCustomer = createAsyncThunk<ICustomer, { id: number, data: ICustomer }>(
+export const editCustomer = createAsyncThunk<ICustomer, { id: number, data: ICustomer, page: number }>(
     'api/editCustomer',
-    async ({ id, data }) => {
-        console.log("DATA", data)
-        console.log("ID", id)
+    async ({ id, data, page }) => {
+        const TOKEN = await getToken();
+        console.log("data", data);
+        console.log("id", id);
+
         const response = await fetch(`${API_URL}/api/customers/${id}`, {
             method: 'PUT',
             headers: {
@@ -72,13 +76,14 @@ export const editCustomer = createAsyncThunk<ICustomer, { id: number, data: ICus
             body: JSON.stringify(data),
         });
         if (!response.ok) {
-            console.log(`Failed to edit Customer #${id}: ${response.body}`);
+            const responseText = await response.text();
+            console.log(`Failed to edit Customer #${id}: ${responseText}`);
             toast.error(`Failed to edit Customer #${id}`);
             throw new Error(`Failed to edit Customer #${id}`); 
         }
  
         const editedCustomer = await response.json();
-        sessionStorage.removeItem(`customers_${id}`);
+        sessionStorage.removeItem(`customers_${page}`);
         toast.success(`Customer #${id} edited successfully`);
         return editedCustomer;
     }
@@ -87,6 +92,8 @@ export const editCustomer = createAsyncThunk<ICustomer, { id: number, data: ICus
 export const editWeb = createAsyncThunk<ICustomerWeb, { id: string, data: ICustomerWeb }>(
     'api/editWeb',
     async ({ id, data }) => {
+        const TOKEN = await getToken();
+        
         const response = await fetch(`${API_URL}/api/customers/webs/${id}`, {
             method: 'PUT',
             headers: {
@@ -96,11 +103,17 @@ export const editWeb = createAsyncThunk<ICustomerWeb, { id: string, data: ICusto
             body: JSON.stringify(data),
         });
         if (!response.ok) {
+            const responseText = await response.text();
+            console.log(`Failed to edit Web #${id}: ${responseText}`);
+            toast.error(`Failed to edit Web #${id}`);
             throw new Error('Failed to edit Web');
         }
-
+        
         const editedWeb = await response.json();
-        sessionStorage.removeItem(`customer_webs_${id}`);
+        // delete cached data
+        sessionStorage.removeItem(`customer_webs_${data.customerId}`);
+        toast.success(`Web #${id} edited successfully`);
+        console.log(">>>>>>>", editedWeb);
         return editedWeb;
     }
 ) as any;

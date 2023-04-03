@@ -20,9 +20,9 @@ import { useForm } from "react-hook-form";
 import { ICustomerEdit } from "../../helper/interfaces/api";
 import { AiOutlineEdit } from "@react-icons/all-files/ai/AiOutlineEdit";
 import { AiOutlineClose } from "@react-icons/all-files/ai/AiOutlineClose";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editCustomer } from "../../redux/features/api_data/apiSlice";
-
+import { RootState } from "../../redux/store";
 
 const CustomerInfo: FC<ICustomerInfoProp> = ({ customer }) => {
     const {
@@ -38,7 +38,10 @@ const CustomerInfo: FC<ICustomerInfoProp> = ({ customer }) => {
         lastModifiedDate,
         observations
     } = customer;
-
+    
+    const { page } = useSelector((state: RootState) => state.page);
+    console.log(page);
+    
     const dispatch = useDispatch();
 
     type Checks = {
@@ -63,14 +66,18 @@ const CustomerInfo: FC<ICustomerInfoProp> = ({ customer }) => {
     return (
         <CustomerDataWrapper>
             <CustomerInfoForm
-                onSubmit={handleSubmit(data => {
+                onSubmit={handleSubmit(data => {                                        
                     const updatedData:ICustomerEdit = {
                         ...customer,
-                        ...data,
-                        ...checks
+                        contactName: data.contactName ? data.contactName : customer.contactName,
+                        phone1: data.phone1 ? data.phone1 : customer.phone1,
+                        phone2: data.phone2 ? data.phone2 : customer.phone2,
+                        email: data.email ? data.email : customer.email,
+                        observations: data.observations ? data.observations : customer.observations,
+                        ...checks,                   
+                        eccomerceId: null     
                     };
-
-                    dispatch(editCustomer({ id, data: updatedData }));
+                    dispatch(editCustomer({ id: id, data: updatedData, page: page}));
                     setIsEditing(prev => prev = false);
                 })}
             >

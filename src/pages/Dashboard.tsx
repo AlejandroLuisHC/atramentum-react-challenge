@@ -12,6 +12,7 @@ import {
     DashboardPaginationText, 
     DashboardTitle 
 } from '../style/components/dashboard';
+import { setPage } from '../redux/features/pagination/pageSlice';
 
 const Dashboard: FC = () => {
     const [pageNumber, setPageNumber] = useState<number>(0);
@@ -28,18 +29,21 @@ const Dashboard: FC = () => {
     const handlePrevPage = () => {
         if (pageNumber > 0) {
             setPageNumber(prev => prev - 1);
+            dispatch(setPage(pageNumber))
         }
     };
 
     const handleNextPage = () => {
         if (pageNumber < totalPages) {
             setPageNumber(prev => prev + 1);
+            dispatch(setPage(pageNumber))
         }
     };
 
     const handleGoToPage = () => {
         if (pageInput >= 1 && pageInput <= totalPages) {
             setPageNumber(pageInput - 1);
+            dispatch(setPage(pageNumber))
         }
     };
 

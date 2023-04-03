@@ -5,5 +5,5 @@ export const formatDate = (date: string) => {
     const year = newDate.getFullYear();
     const hours = newDate.getHours();
     const minutes = newDate.getMinutes();
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
+    return `${day < 10 ? `0${day}` : day}/${month < 10 ? `0${month}` : month}/${year} ${hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
 }

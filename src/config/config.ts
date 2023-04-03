@@ -5,7 +5,7 @@ const PASS = import.meta.env.VITE_PASS;
 let token: { value: string | null, expiry: number } = { value: null, expiry: 0 };
 
 // Post user and pass to get the token
-async function authenticate(): Promise<string> {
+async function authenticate() {
     const response = await fetch(`${API_URL}/api/authenticate`, {
         method: "POST",
         body: `username=${USER}&password=${PASS}`,
@@ -14,9 +14,8 @@ async function authenticate(): Promise<string> {
         },
     });
     const data = await response.json();
-    const expiry = new Date().getTime() + 8 * 60 * 60 * 1000; // token expires after 8 hours (?)
+    const expiry = new Date().getTime() + 6 * 60 * 60 * 1000; // token expires after 6 hours (?)
     token = { value: data.token, expiry };
-    return data.token;
 }
 
 // Check if the token is available and not expired
@@ -28,7 +27,9 @@ async function getToken(): Promise<string | null> {
     return token.value;
 }
 
+
 export { 
-    API_URL,  
-    getToken 
+    API_URL, 
+    USER, 
+    getToken,
 };

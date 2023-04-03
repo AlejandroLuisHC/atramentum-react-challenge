@@ -7,7 +7,7 @@ export const Container = styled.header`
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background-color: ${color.white};
+    background-color: ${color.backgroundDark};
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
@@ -21,13 +21,14 @@ export const Container = styled.header`
 `;
 
 export const Logo = styled(Link)`
-    font-size: 2rem;
-    font-weight: 700;
+    width: 120px;
     text-decoration: none;
-    color: ${color.black};
+    color: ${color.white};
 
     @media ${device.mobile} {
-        font-size: 1.5rem;
+        position: absolute;
+        top: 25px;
+        left: 25px;
         margin-bottom: 0.5rem;
     }
 `;
@@ -44,9 +45,16 @@ export const Navigation = styled.nav`
 
 export const NavLink = styled(Link)`
     text-decoration: none;
-    color: ${color.black};
+    color: ${color.white};
 
     &:hover {
         color: ${color.blue};
     }
+`;
+
+export const ImgHeader = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 `;

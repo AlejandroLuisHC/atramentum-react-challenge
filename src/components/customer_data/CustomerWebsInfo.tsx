@@ -6,7 +6,6 @@ import {
     ButtonSave,
     CustomerDataWrapper,
     CustomerDetail,
-    CustomerInfoDiv,
     CustomerInfoForm,
     CustomerName,
     DetailInput,
@@ -43,54 +42,52 @@ const CustomerWebsInfo: FC<ICustomerWebsInfoProp> = ({ id }) => {
             <Spinner />
             :
             <CustomerDataWrapper>
-                <CustomerInfoDiv>
-                    <CustomerName>Customer's webs</CustomerName>
-                    {webs.length > 0 && 
-                        <ButtonEdit type="button" isEdit={isEditing} onClick={() => setIsEditing(prev => prev = !prev)}>
-                            {
-                                isEditing ? <AiOutlineClose /> : <AiOutlineEdit />
-                            }
-                        </ButtonEdit>
-                    }
-                    {webs.length > 0 ?
-                        webs.map((web, index) => {
-                            return (
-                                <CustomerInfoForm key={web.id}
-                                    onSubmit={handleSubmit(data => {
-                                        const updatedWeb = {
-                                            ...web,
-                                            url: data[`url${web.id}`],
-                                        }
-                                        dispatch(editWeb({ id: web.id, data: updatedWeb }));
-                                        setIsEditing(prev => prev = false);
-                                    })}
-                                >
-                                    <CustomerDetail>
-                                        <DetailLabel>Web #{index + 1}:</DetailLabel>
-                                        <DetailInput
-                                            type="text"
-                                            defaultValue={web.url}
-                                            disabled={!isEditing}
-                                            {
-                                                ...register(`url${web.id}`, {
-                                                    required: false,
-                                                    maxLength: {
-                                                        value: 100,
-                                                        message: "Max length is 100 characters"
-                                                    }
-                                                })
+                <CustomerName>Customer's webs</CustomerName>
+                {webs.length > 0 &&
+                    <ButtonEdit type="button" isEdit={isEditing} onClick={() => setIsEditing(prev => prev = !prev)}>
+                        {
+                            isEditing ? <AiOutlineClose /> : <AiOutlineEdit />
+                        }
+                    </ButtonEdit>
+                }
+                {webs.length > 0 ?
+                    webs.map((web, index) => {
+                        return (
+                            <CustomerInfoForm key={web.id}
+                                onSubmit={handleSubmit(data => {
+                                    const updatedWeb = {
+                                        ...web,
+                                        url: data[`url${web.id}`],
+                                    }
+                                    dispatch(editWeb({ id: web.id, data: updatedWeb }));
+                                    setIsEditing(prev => prev = false);
+                                })}
+                            >
+                                <CustomerDetail>
+                                    <DetailLabel>Web #{index + 1}:</DetailLabel>
+                                    <DetailInput
+                                        type="text"
+                                        defaultValue={web.url}
+                                        disabled={!isEditing}
+                                        {
+                                        ...register(`url${web.id}`, {
+                                            required: false,
+                                            maxLength: {
+                                                value: 100,
+                                                message: "Max length is 100 characters"
                                             }
-                                        />
-                                        <DetailText>
-                                            Last modified: {formatDate(web.lastModifiedDate)}
-                                        </DetailText>
-                                    </CustomerDetail>
-                                    {isEditing && <ButtonSave type="submit">Save</ButtonSave>}
-                                </CustomerInfoForm>
-                            )
-                        })
-                        : <DetailValueError>No webs found for this customer</DetailValueError>}
-                </CustomerInfoDiv>
+                                        })
+                                        }
+                                    />
+                                    <DetailText>
+                                        Last modified: {formatDate(web.lastModifiedDate)}
+                                    </DetailText>
+                                </CustomerDetail>
+                                {isEditing && <ButtonSave type="submit">Save</ButtonSave>}
+                            </CustomerInfoForm>
+                        )
+                    })
+                    : <DetailValueError>No webs found for this customer</DetailValueError>}
             </CustomerDataWrapper>
     )
 }

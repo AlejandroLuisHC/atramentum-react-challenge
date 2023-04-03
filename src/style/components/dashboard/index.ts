@@ -8,10 +8,11 @@ export const StyledTable = styled.table`
     padding: 0;
     overflow: hidden;
     width: 90vw;
+    
     @media ${device.mobile} {
         padding: 0 16px;
     }
-`;
+    `;
 
 export const StyledTh = styled.th`
     text-align: left;
@@ -48,18 +49,11 @@ export const StyledTr = styled.tr`
 `;
 
 export const StyledTableWrapper = styled.div`
-    overflow-x: auto;
     margin-bottom: 32px;
-
-    @media ${device.desktop} {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-        background-color: ${color.white};
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: ${color.white};
 `;
-
 
 export const DashboardContainer = styled.div`
     display: flex;

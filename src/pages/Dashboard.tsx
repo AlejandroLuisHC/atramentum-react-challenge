@@ -24,26 +24,24 @@ const Dashboard: FC = () => {
 
     useEffect(() => {
         dispatch(fetchCustomers({ pageNumber }));
+        dispatch(setPage(pageNumber))
     }, [dispatch, pageNumber]);
 
     const handlePrevPage = () => {
         if (pageNumber > 0) {
             setPageNumber(prev => prev - 1);
-            dispatch(setPage(pageNumber))
         }
     };
 
     const handleNextPage = () => {
         if (pageNumber < totalPages) {
             setPageNumber(prev => prev + 1);
-            dispatch(setPage(pageNumber))
         }
     };
 
     const handleGoToPage = () => {
         if (pageInput >= 1 && pageInput <= totalPages) {
             setPageNumber(pageInput - 1);
-            dispatch(setPage(pageNumber))
         }
     };
 
@@ -61,6 +59,7 @@ const Dashboard: FC = () => {
             ) : (
                 <>
                     <CustomersTable customers={Customers} />
+                    
                     <DashboardPaginationContainer>
                         <DashboardPaginationText>
                             Page {pageNumber + 1} of {totalPages}

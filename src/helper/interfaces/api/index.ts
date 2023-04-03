@@ -88,6 +88,7 @@ export interface IApiResponse {
 
 export interface IFetchCustomersArgs {
     pageNumber?: number;
+    rows?: number;
 }
 
 export interface ICustomerWeb {

@@ -12,7 +12,7 @@ import { API_URL, getToken } from '../../../config/config'
 
 export const fetchCustomers = createAsyncThunk<IApiResponse, IFetchCustomersArgs>(
     'api/fetchCustomers',
-    async ({ pageNumber = 0 }) => {
+    async ({ pageNumber = 0, rows = 10 }) => {
         const TOKEN = await getToken();
 
         const cachedResponse = sessionStorage.getItem(`customers_${pageNumber}`);
@@ -20,7 +20,7 @@ export const fetchCustomers = createAsyncThunk<IApiResponse, IFetchCustomersArgs
             return JSON.parse(cachedResponse) as IApiResponse;
         }
 
-        const response = await fetch(`${API_URL}/api/customers?pageNumber=${pageNumber}&pageSize=5`, {
+        const response = await fetch(`${API_URL}/api/customers?pageNumber=${pageNumber}&pageSize=${rows}`, {
             headers: {
                 Authorization: `Bearer ${TOKEN}`,
             },
@@ -64,8 +64,6 @@ export const editCustomer = createAsyncThunk<ICustomer, { id: number, data: ICus
     'api/editCustomer',
     async ({ id, data, page }) => {
         const TOKEN = await getToken();
-        console.log("data", data);
-        console.log("id", id);
 
         const response = await fetch(`${API_URL}/api/customers/${id}`, {
             method: 'PUT',
@@ -77,9 +75,8 @@ export const editCustomer = createAsyncThunk<ICustomer, { id: number, data: ICus
         });
         if (!response.ok) {
             const responseText = await response.text();
-            console.log(`Failed to edit Customer #${id}: ${responseText}`);
             toast.error(`Failed to edit Customer #${id}`);
-            throw new Error(`Failed to edit Customer #${id}`); 
+            throw new Error(`Failed to edit Customer #${id}: ${responseText}`); 
         }
  
         const editedCustomer = await response.json();
@@ -104,16 +101,14 @@ export const editWeb = createAsyncThunk<ICustomerWeb, { id: string, data: ICusto
         });
         if (!response.ok) {
             const responseText = await response.text();
-            console.log(`Failed to edit Web #${id}: ${responseText}`);
             toast.error(`Failed to edit Web #${id}`);
-            throw new Error('Failed to edit Web');
+            throw new Error(`Failed to edit Web #${id}: ${responseText}`); 
         }
         
         const editedWeb = await response.json();
         // delete cached data
         sessionStorage.removeItem(`customer_webs_${data.customerId}`);
         toast.success(`Web #${id} edited successfully`);
-        console.log(">>>>>>>", editedWeb);
         return editedWeb;
     }
 ) as any;

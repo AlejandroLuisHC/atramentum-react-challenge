@@ -6,7 +6,7 @@ export const Container = styled.footer`
     justify-content: center;
     align-items: center;
     height: 80px;
-    background-color: ${color.black};
+    background-color: ${color.backgroundDark};
     color: ${color.white};
     font-size: 0.9rem;
 `;

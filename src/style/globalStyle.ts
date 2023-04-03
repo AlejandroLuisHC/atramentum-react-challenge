@@ -7,13 +7,13 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Mulish', sans-serif;
     }
 
     body {
         height: 100%;
         width: 100%;
-        background-color: ${color.white};
+        background-color: ${color.backgroundLight};
         overflow-x: hidden;
 
         &::-webkit-scrollbar {

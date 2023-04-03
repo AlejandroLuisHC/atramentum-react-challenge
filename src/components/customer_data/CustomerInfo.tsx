@@ -40,10 +40,8 @@ const CustomerInfo: FC<ICustomerInfoProp> = ({ customer }) => {
     } = customer;
     
     const { page } = useSelector((state: RootState) => state.page);
-    console.log(page);
-    
     const dispatch = useDispatch();
-
+    
     type Checks = {
         canContactPhone: boolean;
         canSendMail: boolean;
@@ -75,7 +73,6 @@ const CustomerInfo: FC<ICustomerInfoProp> = ({ customer }) => {
                         email: data.email ? data.email : customer.email,
                         observations: data.observations ? data.observations : customer.observations,
                         ...checks,                   
-                        eccomerceId: null     
                     };
                     dispatch(editCustomer({ id: id, data: updatedData, page: page}));
                     setIsEditing(prev => prev = false);

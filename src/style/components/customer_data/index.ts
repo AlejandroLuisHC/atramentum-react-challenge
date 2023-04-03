@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { color, device } from '../../style_constants';
+import { Link } from 'react-router-dom';
 
 export const CustomerId = styled.h1`
     font-size: 36px;
@@ -18,7 +19,7 @@ export const CustomerDataWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 20px;
-`
+    `
 
 export const CustomerInfoDiv = styled.div`
     display: flex;
@@ -29,24 +30,23 @@ export const CustomerInfoDiv = styled.div`
     padding: 20px;
     width: 100%;
     max-width: 600px;
-
+    
     @media ${device.mobile} {
         border-radius: 0;
     }
-`
+    `
 export const CustomerInfoForm = styled.form`
     display: flex;
     flex-direction: column;
-    background-color: ${color.secondary};
     border-radius: 8px;
     padding: 20px;
     width: 100%;
     max-width: 600px;
+    background-color: ${color.white};
+    margin: 10px 0;
     position: relative;
-
-    @media ${device.mobile} {
-        border-radius: 0;
-    }
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `
 
 export const CustomerName = styled.h1`
@@ -137,6 +137,22 @@ export const DetailOption = styled.option`
     
     @media ${device.mobile} {
         font-size: 14px;
+    }
+`
+
+export const BackDashboard = styled(Link)`
+    font-size: 18px;
+    color: ${color.textSecondary};
+    margin-top: 20px;
+    text-decoration: none;
+    text-align: center;
+
+    &:hover {
+        color: ${color.primary};
+    }
+    
+    @media ${device.mobile} {
+        font-size: 16px;
     }
 `
 

@@ -1,19 +1,21 @@
 export const color: Record<string, string> = {
-    primary: '#007bff', // blue
-    primaryFade: '#007bffbf', // blue with 75% opacity
+    backgroundDark: '#2C3F52', // dark blue
+    backgroundLight: '#F5F5F5', // light gray
+    primary: '#008bbb', // blue
+    primaryFade: '#008bbbbf', // blue with 75% opacity
     secondary: '#f5f5f5', // light gray
     tertiary: '#e8e8e8', // off-white
-    text: '#212529', // black
+    text: '#212559', // black
     textSecondary: '#6c757d', // gray
-    accent: '#0056b3', // darker blue
+    accent: '#2C3F52', // dark blue
     accentHover: '#004085', // darker blue (on hover)
     success: '#28a745', // green
     error: '#dc3545', // red 
-    warning: '#ffc107', // yellow
-    blue: '#007bff', // blue (same as primary)
+    warning: '#dca107', // yellow
+    blue: '#008bbb', // blue (same as primary)
     blueDark: '#0056b3', // darker blue (same as accent)
-    white: '#ffffff', // white
-    black: '#000000', // black
+    white: '#fafafa', // white
+    black: '#003040', // black
     blackFade: '#00000088' // black with 50% opacity
 }
 

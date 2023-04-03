@@ -10,22 +10,31 @@ import {
     DashboardPageSelector, 
     DashboardPaginationContainer, 
     DashboardPaginationText, 
+    DashboardRowsPerPageLabel, 
+    DashboardRowsPerPageOption, 
+    DashboardRowsPerPageSelect, 
+    DashboardRowsPerPageWrapper, 
     DashboardTitle 
 } from '../style/components/dashboard';
-import { setPage } from '../redux/features/pagination/pageSlice';
+import { setPage, setRows } from '../redux/features/pagination/pageSlice';
 
 const Dashboard: FC = () => {
-    const [pageNumber, setPageNumber] = useState<number>(0);
-    const [pageInput, setPageInput] = useState<number>(0);
+    const { rows } = useSelector((state: RootState) => state.page);
     const { Customers, totalPages, isLoading, error } = useSelector(
         (state: RootState) => state.api
     );
+
+    const [pageNumber, setPageNumber] = useState<number>(0);
+    const [rowsPerPage, setRowsPerPage] = useState<number>(rows);
+    const [pageInput, setPageInput] = useState<number>(0);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchCustomers({ pageNumber }));
+        dispatch(setRows(rowsPerPage))
         dispatch(setPage(pageNumber))
-    }, [dispatch, pageNumber]);
+        dispatch(fetchCustomers({ pageNumber, rows: rowsPerPage }));
+    }, [dispatch, pageNumber, rowsPerPage]);
 
     const handlePrevPage = () => {
         if (pageNumber > 0) {
@@ -48,7 +57,7 @@ const Dashboard: FC = () => {
     const handlePageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPageInput(parseInt(e.target.value));
     };
-
+    
     return (
         <DashboardContainer>
             <DashboardTitle>Customers Dashboard</DashboardTitle>
@@ -60,6 +69,19 @@ const Dashboard: FC = () => {
                 <>
                     <CustomersTable customers={Customers} />
                     
+                    <DashboardRowsPerPageWrapper>
+                        <DashboardRowsPerPageLabel htmlFor="rowsPerPage">Rows per page: {rows}</DashboardRowsPerPageLabel>
+                        <DashboardRowsPerPageSelect name="rowsPerPage" id="rowsPerPage"
+                            onChange={(e) => setRowsPerPage(parseInt(e.target.value))}
+                        >
+                            <DashboardRowsPerPageOption>Change</DashboardRowsPerPageOption>
+                            <DashboardRowsPerPageOption value="5">5</DashboardRowsPerPageOption>
+                            <DashboardRowsPerPageOption value="10">10</DashboardRowsPerPageOption>
+                            <DashboardRowsPerPageOption value="20">20</DashboardRowsPerPageOption>
+                            <DashboardRowsPerPageOption value="40">40</DashboardRowsPerPageOption>
+                        </DashboardRowsPerPageSelect>
+                    </DashboardRowsPerPageWrapper>
+
                     <DashboardPaginationContainer>
                         <DashboardPaginationText>
                             Page {pageNumber + 1} of {totalPages}

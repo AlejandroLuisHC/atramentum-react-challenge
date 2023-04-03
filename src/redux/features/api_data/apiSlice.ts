@@ -5,17 +5,19 @@ import {
     IFetchCustomersArgs,
     IApiResponseWeb,
     ICustomerWeb,
-    IFetchCustomerWebssArgs
+    IFetchCustomerWebssArgs,
+    IEditCustomersArgs
 } from '../../../helper/interfaces/api';
 import { toast } from "react-hot-toast";
 import { API_URL, getToken } from '../../../config/config'
 
+// Function to GET all customers
 export const fetchCustomers = createAsyncThunk<IApiResponse, IFetchCustomersArgs>(
     'api/fetchCustomers',
     async ({ pageNumber = 0, rows = 10 }) => {
         const TOKEN = await getToken();
 
-        const cachedResponse = sessionStorage.getItem(`customers_${pageNumber}`);
+        const cachedResponse = sessionStorage.getItem(`customers_${pageNumber}_rows_${rows}`);
         if (cachedResponse) {
             return JSON.parse(cachedResponse) as IApiResponse;
         }
@@ -30,11 +32,12 @@ export const fetchCustomers = createAsyncThunk<IApiResponse, IFetchCustomersArgs
         }
 
         const data = await response.json();
-        sessionStorage.setItem(`customers_${pageNumber}`, JSON.stringify(data));
+        sessionStorage.setItem(`customers_${pageNumber}_rows_${rows}`, JSON.stringify(data));
         return data;
     }
 ) as any;
 
+// Function to GET all customer webs
 export const fetchCustomerWebs = createAsyncThunk<IApiResponseWeb, IFetchCustomerWebssArgs>(
     'api/fetchCustomerWebs',
     async ({ customerId }) => {
@@ -60,9 +63,11 @@ export const fetchCustomerWebs = createAsyncThunk<IApiResponseWeb, IFetchCustome
     }
 ) as any;
 
-export const editCustomer = createAsyncThunk<ICustomer, { id: number, data: ICustomer, page: number }>(
+
+// Function to edit customer
+export const editCustomer = createAsyncThunk<ICustomer, IEditCustomersArgs>(
     'api/editCustomer',
-    async ({ id, data, page }) => {
+    async ({ id, data, page, rows }) => {
         const TOKEN = await getToken();
 
         const response = await fetch(`${API_URL}/api/customers/${id}`, {
@@ -80,12 +85,13 @@ export const editCustomer = createAsyncThunk<ICustomer, { id: number, data: ICus
         }
  
         const editedCustomer = await response.json();
-        sessionStorage.removeItem(`customers_${page}`);
+        sessionStorage.removeItem(`customers_${page}_rows_${rows}`);
         toast.success(`Customer #${id} edited successfully`);
         return editedCustomer;
     }
 ) as any;
 
+// Function to edit a customer web
 export const editWeb = createAsyncThunk<ICustomerWeb, { id: string, data: ICustomerWeb }>(
     'api/editWeb',
     async ({ id, data }) => {
@@ -106,13 +112,13 @@ export const editWeb = createAsyncThunk<ICustomerWeb, { id: string, data: ICusto
         }
         
         const editedWeb = await response.json();
-        // delete cached data
         sessionStorage.removeItem(`customer_webs_${data.customerId}`);
         toast.success(`Web #${id} edited successfully`);
         return editedWeb;
     }
 ) as any;
 
+// Slice to store all the data from the API
 export const apiSlice = createSlice({
     name: 'api',
     initialState: {

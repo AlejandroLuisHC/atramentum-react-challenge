@@ -39,7 +39,9 @@ const CustomerInfo: FC<ICustomerInfoProp> = ({ customer }) => {
         observations
     } = customer;
     
-    const { page } = useSelector((state: RootState) => state.page);
+    const { page, rows } = useSelector(
+        (state: RootState) => state.page
+    );
     const dispatch = useDispatch();
     
     type Checks = {
@@ -74,7 +76,7 @@ const CustomerInfo: FC<ICustomerInfoProp> = ({ customer }) => {
                         observations: data.observations ? data.observations : customer.observations,
                         ...checks,                   
                     };
-                    dispatch(editCustomer({ id: id, data: updatedData, page: page}));
+                    dispatch(editCustomer({ id: id, data: updatedData, page, rows }));
                     setIsEditing(prev => prev = false);
                 })}
             >

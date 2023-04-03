@@ -91,6 +91,13 @@ export interface IFetchCustomersArgs {
     rows?: number;
 }
 
+export interface IEditCustomersArgs {
+    id: number, 
+    data: ICustomer, 
+    page: number, 
+    rows: number 
+}
+
 export interface ICustomerWeb {
     id: number;
     customerId: number;

@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiReducer } from "./features/api_data/apiSlice";
-import { pageReducer } from "./features/pagination/pageSlice";
+import { pageReducer } from "./features/table/pageSlice";
 
 export const store = configureStore({
     reducer: {

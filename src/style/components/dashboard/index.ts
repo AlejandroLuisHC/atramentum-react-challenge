@@ -18,6 +18,7 @@ export const StyledTh = styled.th`
     text-align: left;
     padding: 16px;
     font-weight: bold;
+    color: ${color.text};
     border-bottom: 2px solid ${color.secondary};
 
     @media ${device.mobile} {
@@ -64,6 +65,11 @@ export const DashboardContainer = styled.div`
 export const DashboardTitle = styled.h1`
     margin-bottom: 20px;
     font-size: 32px;
+    color: ${color.text};
+
+    @media ${device.mobile} {
+        font-size: 24px;
+    }
 `;
 
 export const DashboardPaginationContainer = styled.div`
@@ -163,4 +169,59 @@ export const DashboardRowsPerPageOption = styled.option`
     @media ${device.mobile} {
         font-size: 14px;
     }
+`;
+
+export const ItemsSelectorWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ${color.text};
+    background-color: ${color.white};
+    border-radius: 8px;
+    height: 90px;
+    padding: 30px 20px 10px;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 90vw;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+export const ItemsSelectorTitle = styled.h3`
+    font-size: 16px;
+    margin-right: 20px;
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    color: ${color.text};
+    transform: translatex(-50%);
+    
+    @media ${device.mobile} {
+        font-size: 14px;
+    }
+`;
+
+export const ItemsSelectorLabel = styled.label`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+    gap: 5px;
+    margin-right: 20px;           
+    @media ${device.mobile} {
+        font-size: 12px;
+        margin-right: 0;
+    }
+`;
+
+export const ItemsSelectorInput = styled.input`
+    height: 12px;
+    border-radius: 5px;
+    border: 1px solid ${color.tertiary};
+    text-align: center;
+
+    @media ${device.mobile} {
+        height: 16px;
+    }
+
 `;

@@ -16,7 +16,7 @@ import {
     DashboardRowsPerPageWrapper, 
     DashboardTitle 
 } from '../style/components/dashboard';
-import { setPage, setRows } from '../redux/features/pagination/pageSlice';
+import { setPage, setRows } from '../redux/features/table/pageSlice';
 
 const Dashboard: FC = () => {
     const { rows } = useSelector((state: RootState) => state.page);

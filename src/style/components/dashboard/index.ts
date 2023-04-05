@@ -20,9 +20,32 @@ export const StyledTh = styled.th`
     font-weight: bold;
     color: ${color.text};
     border-bottom: 2px solid ${color.secondary};
+    cursor: default;
 
     @media ${device.mobile} {
         padding: 12px;
+        font-size: 14px;
+    }
+`;
+
+export const StyledSortButton = styled.button`
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: ${color.primary};
+    font-size: 16px;
+    margin-left: 5px;
+    transform: translateY(3px);
+    
+    &:hover {
+        color: ${color.warning};
+    }
+
+    &:active {
+        color: ${color.accent};
+    }
+
+    @media ${device.mobile} {
         font-size: 14px;
     }
 `;

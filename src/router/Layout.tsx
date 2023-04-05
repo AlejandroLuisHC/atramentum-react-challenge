@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
-import { Main, LayoutContainer } from '../style/components/layout/layoutStyle';
+import { Main, LayoutContainer } from '../style/components/layout';
 import { memo } from 'react'
 import { Toaster } from 'react-hot-toast';
 

@@ -5,6 +5,7 @@ import {
     ButtonSave,
     CustomerDataWrapper,
     CustomerDetail,
+    CustomerInfoDiv,
     CustomerInfoForm,
     CustomerName,
     DetailInput,
@@ -65,229 +66,232 @@ const CustomerInfo: FC<ICustomerInfoProp> = ({ customer }) => {
 
     return (
         <CustomerDataWrapper>
-            <CustomerInfoForm
-                onSubmit={handleSubmit(data => {                                        
-                    const updatedData:ICustomerEdit = {
-                        ...customer,
-                        contactName: data.contactName ? data.contactName : customer.contactName,
-                        phone1: data.phone1 ? data.phone1 : customer.phone1,
-                        phone2: data.phone2 ? data.phone2 : customer.phone2,
-                        email: data.email ? data.email : customer.email,
-                        observations: data.observations ? data.observations : customer.observations,
-                        ...checks,                   
-                    };
-                    dispatch(editCustomer({ id: id, data: updatedData, page, rows }));
-                    setIsEditing(prev => prev = false);
-                })}
-            >
+            <CustomerInfoDiv>
                 <CustomerName>Customer's information</CustomerName>
-                <ButtonEdit type="button" isEdit={isEditing} onClick={() => setIsEditing(prev => prev = !prev)}>
-                    {
-                        isEditing ? <AiOutlineClose /> : <AiOutlineEdit />
-                    }
-                </ButtonEdit>
-                <CustomerDetail>
-                    <DetailLabel htmlFor="contactName">Contact name:</DetailLabel>
-                    <DetailInput
-                        type="text"
-                        defaultValue={contactName}
-                        disabled={!isEditing}
+                <CustomerInfoForm
+                    onSubmit={handleSubmit(data => {                                        
+                        const updatedData:ICustomerEdit = {
+                            ...customer,
+                            contactName: data.contactName ? data.contactName : customer.contactName,
+                            phone1: data.phone1 ? data.phone1 : customer.phone1,
+                            phone2: data.phone2 ? data.phone2 : customer.phone2,
+                            email: data.email ? data.email : customer.email,
+                            observations: data.observations ? data.observations : customer.observations,
+                            ...checks,                   
+                        };
+                        dispatch(editCustomer({ id: id, data: updatedData, page, rows }));
+                        setIsEditing(prev => prev = false);
+                    })}
+                >
+                    
+                    <ButtonEdit type="button" isEdit={isEditing} onClick={() => setIsEditing(prev => prev = !prev)}>
                         {
-                            ...register("contactName", {
-                                required: false,
-                                minLength: {
-                                    value: 3,
-                                    message: "Contact name must be at least 3 characters"
-                                },
-                                maxLength: {
-                                    value: 50,
-                                    message: "Contact name must be less than 50 characters"
-                                }
-                            })
+                            isEditing ? <AiOutlineClose /> : <AiOutlineEdit />
                         }
-                    />
-                </CustomerDetail>
-                <CustomerDetail>
-                    <DetailLabel htmlFor="phone1">Phone 1:</DetailLabel>
-                    <DetailInput
-                        type="phone"
-                        defaultValue={phone1}
-                        disabled={!isEditing}
+                    </ButtonEdit>
+                    <CustomerDetail>
+                        <DetailLabel htmlFor="contactName">Contact name:</DetailLabel>
+                        <DetailInput
+                            type="text"
+                            defaultValue={contactName}
+                            disabled={!isEditing}
+                            {
+                                ...register("contactName", {
+                                    required: false,
+                                    minLength: {
+                                        value: 3,
+                                        message: "Contact name must be at least 3 characters"
+                                    },
+                                    maxLength: {
+                                        value: 50,
+                                        message: "Contact name must be less than 50 characters"
+                                    }
+                                })
+                            }
+                        />
+                    </CustomerDetail>
+                    <CustomerDetail>
+                        <DetailLabel htmlFor="phone1">Phone 1:</DetailLabel>
+                        <DetailInput
+                            type="phone"
+                            defaultValue={phone1}
+                            disabled={!isEditing}
+                            {
+                                ...register("phone1", {
+                                    required: false,
+                                    minLength: {
+                                        value: 3,
+                                        message: "Phone 1 must be at least 3 characters"
+                                    },
+                                    maxLength: {
+                                        value: 50,
+                                        message: "Phone 1 must be less than 50 characters"
+                                    }
+                                })
+                            }
+                        />
+                    </CustomerDetail>
+                    <CustomerDetail>
+                        <DetailLabel htmlFor="phone2">Phone 2:</DetailLabel>
+                        <DetailInput
+                            type="phone"
+                            defaultValue={phone2}
+                            disabled={!isEditing}
+                            {
+                                ...register("phone2", {
+                                    required: false,
+                                    minLength: {
+                                        value: 3,
+                                        message: "Phone 2 must be at least 3 characters"
+                                    },
+                                    maxLength: {
+                                        value: 50,
+                                        message: "Phone 2 must be less than 50 characters"
+                                    }
+                                })
+                            }
+                        />
+                    </CustomerDetail>
+                    <CustomerDetail>
+                        <DetailLabel htmlFor="email">Email:</DetailLabel>
+                        <DetailInput
+                            type="email"
+                            defaultValue={email}
+                            disabled={!isEditing}
+                            {
+                                ...register("email", {
+                                    required: false,
+                                    minLength: {
+                                        value: 3,
+                                        message: "Email must be at least 3 characters"
+                                    },
+                                    maxLength: {
+                                        value: 50,
+                                        message: "Email must be less than 50 characters"
+                                    }
+                                })
+                            }
+                        />
+                    </CustomerDetail>
+                    <CustomerDetail>
+                        <DetailLabel htmlFor="canContactPhone">Can contact phone:</DetailLabel>
                         {
-                            ...register("phone1", {
-                                required: false,
-                                minLength: {
-                                    value: 3,
-                                    message: "Phone 1 must be at least 3 characters"
-                                },
-                                maxLength: {
-                                    value: 50,
-                                    message: "Phone 1 must be less than 50 characters"
-                                }
-                            })
+                            canContactPhone ?
+                                <DetailSelect
+                                    name="canContactPhone"
+                                    disabled={!isEditing}
+                                    onChange={(e) => setChecks(prev => prev = { ...prev, canContactPhone: e.target.value === "true" ? true : false})}
+                                >
+                                    <DetailOption value="true">Yes</DetailOption>
+                                    <DetailOption value="false">No</DetailOption>
+                                </DetailSelect>
+                                :
+                                <DetailSelect
+                                    name="canContactPhone"
+                                    disabled={!isEditing}
+                                    onChange={(e) => setChecks(prev => prev = { ...prev, canContactPhone: e.target.value === "true" ? true : false})}
+                                >
+                                    <DetailOption value="false">No</DetailOption>
+                                    <DetailOption value="true">Yes</DetailOption>
+                                </DetailSelect>
                         }
-                    />
-                </CustomerDetail>
-                <CustomerDetail>
-                    <DetailLabel htmlFor="phone2">Phone 2:</DetailLabel>
-                    <DetailInput
-                        type="phone"
-                        defaultValue={phone2}
-                        disabled={!isEditing}
+                    </CustomerDetail>
+                    <CustomerDetail>
+                        <DetailLabel htmlFor="canSendMail">Can send mail:</DetailLabel>
                         {
-                            ...register("phone2", {
-                                required: false,
-                                minLength: {
-                                    value: 3,
-                                    message: "Phone 2 must be at least 3 characters"
-                                },
-                                maxLength: {
-                                    value: 50,
-                                    message: "Phone 2 must be less than 50 characters"
-                                }
-                            })
+                            canSendMail ?
+                                <DetailSelect
+                                    name="canSendMail"
+                                    disabled={!isEditing}
+                                    onChange={(e) => setChecks(prev => prev = { ...prev, canSendMail: e.target.value === "true" ? true : false})}
+                                >
+                                    <DetailOption value="true">Yes</DetailOption>
+                                    <DetailOption value="false">No</DetailOption>
+                                </DetailSelect>
+                                :
+                                <DetailSelect
+                                    name="canSendMail"
+                                    disabled={!isEditing}
+                                    onChange={(e) => setChecks(prev => prev = { ...prev, canSendMail: e.target.value === "true" ? true : false})}
+                                >
+                                    <DetailOption value="false">No</DetailOption>
+                                    <DetailOption value="true">Yes</DetailOption>
+                                </DetailSelect>
                         }
-                    />
-                </CustomerDetail>
-                <CustomerDetail>
-                    <DetailLabel htmlFor="email">Email:</DetailLabel>
-                    <DetailInput
-                        type="email"
-                        defaultValue={email}
-                        disabled={!isEditing}
+                    </CustomerDetail>
+                    <CustomerDetail>
+                        <DetailLabel htmlFor="agreeTerms">Agree terms:</DetailLabel>
                         {
-                            ...register("email", {
-                                required: false,
-                                minLength: {
-                                    value: 3,
-                                    message: "Email must be at least 3 characters"
-                                },
-                                maxLength: {
-                                    value: 50,
-                                    message: "Email must be less than 50 characters"
-                                }
-                            })
+                            agreeTerms ?
+                                <DetailSelect
+                                    name="agreeTerms"
+                                    disabled={!isEditing}
+                                    onChange={(e) => setChecks(prev => prev = { ...prev, agreeTerms: e.target.value === "true" ? true : false})}
+                                >
+                                    <DetailOption value="true">Yes</DetailOption>
+                                    <DetailOption value="false">No</DetailOption>
+                                </DetailSelect>
+                                :
+                                <DetailSelect
+                                    name="agreeTerms"
+                                    disabled={!isEditing}
+                                    onChange={(e) => setChecks(prev => prev = { ...prev, agreeTerms: e.target.value === "true" ? true : false})}
+                                >
+                                    <DetailOption value="false">No</DetailOption>
+                                    <DetailOption value="true">Yes</DetailOption>
+                                </DetailSelect>
                         }
-                    />
-                </CustomerDetail>
-                <CustomerDetail>
-                    <DetailLabel htmlFor="canContactPhone">Can contact phone:</DetailLabel>
-                    {
-                        canContactPhone ?
-                            <DetailSelect
-                                name="canContactPhone"
-                                disabled={!isEditing}
-                                onChange={(e) => setChecks(prev => prev = { ...prev, canContactPhone: e.target.value === "true" ? true : false})}
-                            >
-                                <DetailOption value="true">Yes</DetailOption>
-                                <DetailOption value="false">No</DetailOption>
-                            </DetailSelect>
-                            :
-                            <DetailSelect
-                                name="canContactPhone"
-                                disabled={!isEditing}
-                                onChange={(e) => setChecks(prev => prev = { ...prev, canContactPhone: e.target.value === "true" ? true : false})}
-                            >
-                                <DetailOption value="false">No</DetailOption>
-                                <DetailOption value="true">Yes</DetailOption>
-                            </DetailSelect>
-                    }
-                </CustomerDetail>
-                <CustomerDetail>
-                    <DetailLabel htmlFor="canSendMail">Can send mail:</DetailLabel>
-                    {
-                        canSendMail ?
-                            <DetailSelect
-                                name="canSendMail"
-                                disabled={!isEditing}
-                                onChange={(e) => setChecks(prev => prev = { ...prev, canSendMail: e.target.value === "true" ? true : false})}
-                            >
-                                <DetailOption value="true">Yes</DetailOption>
-                                <DetailOption value="false">No</DetailOption>
-                            </DetailSelect>
-                            :
-                            <DetailSelect
-                                name="canSendMail"
-                                disabled={!isEditing}
-                                onChange={(e) => setChecks(prev => prev = { ...prev, canSendMail: e.target.value === "true" ? true : false})}
-                            >
-                                <DetailOption value="false">No</DetailOption>
-                                <DetailOption value="true">Yes</DetailOption>
-                            </DetailSelect>
-                    }
-                </CustomerDetail>
-                <CustomerDetail>
-                    <DetailLabel htmlFor="agreeTerms">Agree terms:</DetailLabel>
-                    {
-                        agreeTerms ?
-                            <DetailSelect
-                                name="agreeTerms"
-                                disabled={!isEditing}
-                                onChange={(e) => setChecks(prev => prev = { ...prev, agreeTerms: e.target.value === "true" ? true : false})}
-                            >
-                                <DetailOption value="true">Yes</DetailOption>
-                                <DetailOption value="false">No</DetailOption>
-                            </DetailSelect>
-                            :
-                            <DetailSelect
-                                name="agreeTerms"
-                                disabled={!isEditing}
-                                onChange={(e) => setChecks(prev => prev = { ...prev, agreeTerms: e.target.value === "true" ? true : false})}
-                            >
-                                <DetailOption value="false">No</DetailOption>
-                                <DetailOption value="true">Yes</DetailOption>
-                            </DetailSelect>
-                    }
-                </CustomerDetail>
-                <CustomerDetail>
-                    <DetailLabel htmlFor="agreeCommercials">Agree commercials:</DetailLabel>
-                    {
-                        agreeCommercials ? 
-                            <DetailSelect
-                                name="agreeCommercials"
-                                disabled={!isEditing}
-                                onChange={(e) => setChecks(prev => prev = { ...prev, agreeCommercials: e.target.value === "true" ? true : false})}
-                            >
-                                <DetailOption value="true">Yes</DetailOption> 
-                                <DetailOption value="false">No</DetailOption>
-                            </DetailSelect>
-                            : 
-                            <DetailSelect
-                                name="agreeCommercials"
-                                disabled={!isEditing}
-                                onChange={(e) => setChecks(prev => prev = { ...prev, agreeCommercials: e.target.value === "true" ? true : false})}
-                            >
-                                <DetailOption value="false">No</DetailOption>
-                                <DetailOption value="true">Yes</DetailOption> 
-                            </DetailSelect>
-                    }
-                </CustomerDetail>
-                <CustomerDetail>
-                    <DetailLabel htmlFor="observations">Observations:</DetailLabel>
-                    <DetailTextarea
-                        disabled={!isEditing}
-                        defaultValue={observations}
+                    </CustomerDetail>
+                    <CustomerDetail>
+                        <DetailLabel htmlFor="agreeCommercials">Agree commercials:</DetailLabel>
                         {
-                            ...register("observations", {
-                                required: false,
-                                minLength: {
-                                    value: 3,
-                                    message: "Observations must be at least 3 characters"
-                                },
-                                maxLength: {
-                                    value: 500,
-                                    message: "Observations must be less than 500 characters"
-                                }
-                            })
+                            agreeCommercials ? 
+                                <DetailSelect
+                                    name="agreeCommercials"
+                                    disabled={!isEditing}
+                                    onChange={(e) => setChecks(prev => prev = { ...prev, agreeCommercials: e.target.value === "true" ? true : false})}
+                                >
+                                    <DetailOption value="true">Yes</DetailOption> 
+                                    <DetailOption value="false">No</DetailOption>
+                                </DetailSelect>
+                                : 
+                                <DetailSelect
+                                    name="agreeCommercials"
+                                    disabled={!isEditing}
+                                    onChange={(e) => setChecks(prev => prev = { ...prev, agreeCommercials: e.target.value === "true" ? true : false})}
+                                >
+                                    <DetailOption value="false">No</DetailOption>
+                                    <DetailOption value="true">Yes</DetailOption> 
+                                </DetailSelect>
                         }
-                    />
-                </CustomerDetail>
-                <CustomerDetail>
-                    <DetailTitle>Last modified:</DetailTitle>
-                    <DetailText>{formatDate(lastModifiedDate)}</DetailText>
-                </CustomerDetail>
-                {isEditing && <ButtonSave type="submit">Save</ButtonSave>}
-            </CustomerInfoForm>
+                    </CustomerDetail>
+                    <CustomerDetail>
+                        <DetailLabel htmlFor="observations">Observations:</DetailLabel>
+                        <DetailTextarea
+                            disabled={!isEditing}
+                            defaultValue={observations}
+                            {
+                                ...register("observations", {
+                                    required: false,
+                                    minLength: {
+                                        value: 3,
+                                        message: "Observations must be at least 3 characters"
+                                    },
+                                    maxLength: {
+                                        value: 500,
+                                        message: "Observations must be less than 500 characters"
+                                    }
+                                })
+                            }
+                        />
+                    </CustomerDetail>
+                    <CustomerDetail>
+                        <DetailTitle>Last modified:</DetailTitle>
+                        <DetailText>{formatDate(lastModifiedDate)}</DetailText>
+                    </CustomerDetail>
+                    {isEditing && <ButtonSave type="submit">Save</ButtonSave>}
+                </CustomerInfoForm>
+            </CustomerInfoDiv>
         </CustomerDataWrapper>
     )
 }

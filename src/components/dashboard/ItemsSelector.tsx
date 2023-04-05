@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 import { IItemsTable } from '../../helper/interfaces/dashboard'
 import { ItemsSelectorInput, ItemsSelectorLabel, ItemsSelectorTitle, ItemsSelectorWrapper } from '../../style/components/dashboard'
 
@@ -66,4 +66,4 @@ const ItemsSelector: FC<{itemsToDisplay: IItemsTable, setItemsToDisplay: Functio
     )
 }
 
-export default ItemsSelector
+export default memo(ItemsSelector)

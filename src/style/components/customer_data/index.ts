@@ -17,7 +17,7 @@ export const CustomerDataWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    `
+`
 
 export const CustomerInfoDiv = styled.div`
     display: flex;
@@ -42,7 +42,6 @@ export const CustomerInfoForm = styled.form`
     max-width: 600px;
     background-color: ${color.white};
     margin: 10px 0;
-    position: relative;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `

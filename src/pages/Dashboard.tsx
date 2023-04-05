@@ -4,29 +4,23 @@ import CustomersTable from '../components/dashboard/CustomersTable';
 import { fetchCustomers } from '../redux/features/api_data/apiSlice';
 import { RootState } from '../redux/store';
 import Spinner from '../components/general_components/Spinner';
-import { 
-    DashboardButton, 
-    DashboardContainer, 
-    DashboardPageSelector, 
-    DashboardPaginationContainer, 
-    DashboardPaginationText, 
-    DashboardRowsPerPageLabel, 
-    DashboardRowsPerPageOption, 
-    DashboardRowsPerPageSelect, 
-    DashboardRowsPerPageWrapper, 
-    DashboardTitle 
+import {
+    DashboardContainer,
+    DashboardTitle
 } from '../style/components/dashboard';
 import { setPage, setRows } from '../redux/features/table/pageSlice';
+import RowsPage from '../components/dashboard/RowsPage';
+import Pagination from '../components/dashboard/Pagination';
+import { DetailValueError } from '../style/components/customer_data';
 
 const Dashboard: FC = () => {
     const { rows } = useSelector((state: RootState) => state.page);
     const { Customers, totalPages, isLoading, error } = useSelector(
         (state: RootState) => state.api
     );
-
+    console.log(rows)
     const [pageNumber, setPageNumber] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(rows);
-    const [pageInput, setPageInput] = useState<number>(0);
 
     const dispatch = useDispatch();
 
@@ -36,67 +30,28 @@ const Dashboard: FC = () => {
         dispatch(fetchCustomers({ pageNumber, rows: rowsPerPage }));
     }, [dispatch, pageNumber, rowsPerPage]);
 
-    const handlePrevPage = () => {
-        if (pageNumber > 0) {
-            setPageNumber(prev => prev - 1);
-        }
-    };
-
-    const handleNextPage = () => {
-        if (pageNumber < totalPages) {
-            setPageNumber(prev => prev + 1);
-        }
-    };
-
-    const handleGoToPage = () => {
-        if (pageInput >= 1 && pageInput <= totalPages) {
-            setPageNumber(pageInput - 1);
-        }
-    };
-
-    const handlePageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPageInput(parseInt(e.target.value));
-    };
-    
     return (
         <DashboardContainer>
             <DashboardTitle>Customers Dashboard</DashboardTitle>
-            {isLoading ? (
+            {isLoading ?
                 <Spinner />
-            ) : error ? (
-                <h2>{error}</h2>
-            ) : (
-                <>
-                    <CustomersTable customers={Customers} />
-                    
-                    <DashboardRowsPerPageWrapper>
-                        <DashboardRowsPerPageLabel htmlFor="rowsPerPage">Rows per page: {rows}</DashboardRowsPerPageLabel>
-                        <DashboardRowsPerPageSelect name="rowsPerPage" id="rowsPerPage"
-                            onChange={(e) => setRowsPerPage(parseInt(e.target.value))}
-                        >
-                            <DashboardRowsPerPageOption>Change</DashboardRowsPerPageOption>
-                            {rows !== 5 && <DashboardRowsPerPageOption value="5">5</DashboardRowsPerPageOption>}
-                            {rows !== 10 && <DashboardRowsPerPageOption value="10">10</DashboardRowsPerPageOption>}
-                            {rows !== 20 && <DashboardRowsPerPageOption value="20">20</DashboardRowsPerPageOption>}
-                            {rows !== 40 && <DashboardRowsPerPageOption value="40">40</DashboardRowsPerPageOption>}
-                        </DashboardRowsPerPageSelect>
-                    </DashboardRowsPerPageWrapper>
+                : error ?
+                    <DetailValueError>{error}</DetailValueError>
+                    :
+                    <>
+                        <CustomersTable customers={Customers} />
 
-                    <DashboardPaginationContainer>
-                        <DashboardPaginationText>
-                            Page {pageNumber + 1} of {totalPages}
-                        </DashboardPaginationText>
-                        <DashboardButton onClick={handlePrevPage} disabled={pageNumber === 0}>
-                            Prev
-                        </DashboardButton>
-                        <DashboardButton onClick={handleNextPage} disabled={pageNumber === totalPages - 1}>
-                            Next
-                        </DashboardButton>
-                        <DashboardPageSelector type="number" min={1} max={totalPages} placeholder={`${pageNumber + 1}`} onChange={handlePageInputChange} />
-                        <DashboardButton onClick={handleGoToPage}>Go</DashboardButton>
-                    </DashboardPaginationContainer>
-                </>
-            )}
+                        <RowsPage
+                            setRowsPerPage={setRowsPerPage}
+                        />
+
+                        <Pagination
+                            totalPages={totalPages}
+                            pageNumber={pageNumber}
+                            setPageNumber={setPageNumber}
+                        />
+                    </>
+            }
         </DashboardContainer>
     );
 };

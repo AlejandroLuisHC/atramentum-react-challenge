@@ -29,11 +29,11 @@ export const GlobalStyle = createGlobalStyle`
 
         &::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        background: ${color.blue};
+        background: ${color.primary};
         }
 
         &::-webkit-scrollbar-thumb:hover {
-        background: ${color.blueDark};
+        background: ${color.warning};
         }
     }
 `;

@@ -52,7 +52,6 @@ npm run dev
   - Outlet(): a component that allows you to define a placeholder where child routes can be rendered.
 - [React-hook-form](https://react-hook-form.com/)
 - [Styled-Components](https://styled-components.com/)
-- [SpoonaculaAPI](https://spoonacular.com/food-api)
 - [npm](https://www.npmjs.com/)
 
 

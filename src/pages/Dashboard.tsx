@@ -75,10 +75,10 @@ const Dashboard: FC = () => {
                             onChange={(e) => setRowsPerPage(parseInt(e.target.value))}
                         >
                             <DashboardRowsPerPageOption>Change</DashboardRowsPerPageOption>
-                            <DashboardRowsPerPageOption value="5">5</DashboardRowsPerPageOption>
-                            <DashboardRowsPerPageOption value="10">10</DashboardRowsPerPageOption>
-                            <DashboardRowsPerPageOption value="20">20</DashboardRowsPerPageOption>
-                            <DashboardRowsPerPageOption value="40">40</DashboardRowsPerPageOption>
+                            {rows !== 5 && <DashboardRowsPerPageOption value="5">5</DashboardRowsPerPageOption>}
+                            {rows !== 10 && <DashboardRowsPerPageOption value="10">10</DashboardRowsPerPageOption>}
+                            {rows !== 20 && <DashboardRowsPerPageOption value="20">20</DashboardRowsPerPageOption>}
+                            {rows !== 40 && <DashboardRowsPerPageOption value="40">40</DashboardRowsPerPageOption>}
                         </DashboardRowsPerPageSelect>
                     </DashboardRowsPerPageWrapper>
 

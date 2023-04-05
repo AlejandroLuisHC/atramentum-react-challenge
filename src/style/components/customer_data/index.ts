@@ -32,7 +32,8 @@ export const CustomerInfoDiv = styled.div`
     @media ${device.mobile} {
         border-radius: 0;
     }
-    `
+`
+
 export const CustomerInfoForm = styled.form`
     display: flex;
     flex-direction: column;
@@ -174,6 +175,7 @@ export const DetailValueError = styled.p`
         font-size: 14px;
     }
 `
+
 type ButtonEditProps = {
     isEdit: boolean
 };

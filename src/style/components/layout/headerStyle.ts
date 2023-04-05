@@ -30,6 +30,7 @@ export const Logo = styled(Link)`
         top: 25px;
         left: 25px;
         margin-bottom: 0.5rem;
+        width: 100px;
     }
 `;
 

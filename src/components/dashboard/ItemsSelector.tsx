@@ -1,6 +1,11 @@
 import { FC, memo } from 'react'
 import { IItemsTable } from '../../helper/interfaces/dashboard'
-import { ItemsSelectorInput, ItemsSelectorLabel, ItemsSelectorTitle, ItemsSelectorWrapper } from '../../style/components/dashboard'
+import { 
+    ItemsSelectorInput, 
+    ItemsSelectorLabel, 
+    ItemsSelectorTitle, 
+    ItemsSelectorWrapper 
+} from '../../style/components/dashboard/itemsSelector'
 
 const ItemsSelector: FC<{itemsToDisplay: IItemsTable, setItemsToDisplay: Function}> = ({itemsToDisplay, setItemsToDisplay}) => {
     return (

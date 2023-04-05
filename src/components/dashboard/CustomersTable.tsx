@@ -6,7 +6,7 @@ import {
     StyledTr,
     StyledTableWrapper,
     StyledSortButton,
-} from '../../style/components/dashboard';
+} from '../../style/components/dashboard/customersTable';
 import { ICustomersTableProp, IItemsTable } from '../../helper/interfaces/dashboard';
 import { useNavigate } from 'react-router-dom';
 import { formatDate, orderItems } from '../../helper/utils';

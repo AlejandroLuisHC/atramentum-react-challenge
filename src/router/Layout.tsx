@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import { Main, LayoutContainer } from '../style/components/layout';
-import { memo } from 'react'
 import { Toaster } from 'react-hot-toast';
 
 const Layout = () => {
@@ -21,4 +20,4 @@ const Layout = () => {
     )
 }
 
-export default memo(Layout)
+export default Layout
